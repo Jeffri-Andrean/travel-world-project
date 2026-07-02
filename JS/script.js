@@ -1,51 +1,73 @@
-function sapaPengunjung() {
+$(function() {
 
-    let namaTersimpan = sessionStorage.getItem("namaPengunjung");
+    if ($("body").hasClass("page-beranda")) {
+        let n = sessionStorage.getItem("namaPengunjung") || prompt("Halo! Siapa nama Anda?", "Petualang");
+        if (n && n.trim()) {
+            sessionStorage.setItem("namaPengunjung", n);
+            $("main h2").text(`Selamat Datang di Portal Eksplorasi, ${n}!`);
+        }
+    }
 
-    if (namaTersimpan) {
-        document.querySelector("main h2").innerHTML = "Selamat Datang di Portal Eksplorasi, " + namaTersimpan + "!";
-    } 
-    else {
-        let namaTamu = prompt("Halo! Siapa nama Anda?", "Petualang");
+    const cek = (id, errCond, msg) => {
+        errCond ? $(`#${id}`).addClass("error") : $(`#${id}`).removeClass("error");
+        $(`#${id}Error`).text(errCond ? msg : "");
+        return !errCond;
+    };
+
+    $("#formKontak").submit(function(e) {
+        e.preventDefault();
+        let [n, m, p] = [$('#nama').val().trim(), $('#email').val().trim(), $('#pesan').val().trim()];
         
-        if (namaTamu !== null && namaTamu.trim() !== "") {
-            sessionStorage.setItem("namaPengunjung", namaTamu);
-
-            document.querySelector("main h2").innerHTML = "Selamat Datang di Portal Eksplorasi, " + namaTamu + "!";
+        let v1 = cek('nama', n==="", "Nama tidak boleh kosong") && cek('nama', n.length<4, "Minimal 4 karakter");
+        let v2 = cek('email', m==="", "Email tidak boleh kosong") && cek('email', !/^\S+@\S+\.\S+$/.test(m), "Format email salah");
+        let v3 = cek('pesan', p==="", "Pesan tidak boleh kosong");
+        
+        if (v1 && v2 && v3) {
+            $("#hasilForm").html(`<p style='color:#27ae60;font-weight:bold'>Terima kasih, ${n}! Pesan diterima.</p>`);
+            this.reset();
         }
-    }
-}
+    });
 
-function pesanPaket(namaPaket, hargaPerOrang) {
-    let inputJumlah = prompt("Berapa orang yang akan ikut dalam " + namaPaket + "?", "1");
-
-    if (inputJumlah !== null) {
-
-        let jumlah = Number(inputJumlah);
-
-        if (jumlah > 0 && Number.isInteger(jumlah)) {
-           
-            const totalHarga = jumlah * hargaPerOrang;
-     
-            let totalFormat = totalHarga.toLocaleString('id-ID');
-            alert("Berhasil! Anda memesan " + namaPaket + " untuk " + jumlah + " orang.\nTotal biaya: Rp " + totalFormat);
-        } else {
-            alert("Jumlah tidak valid! Harap masukkan angka bulat (misal: 1, 2, atau 3).");
+    $("#formLogin").submit(function(e) {
+        e.preventDefault();
+        let [u, p] = [$('#username').val().trim(), $('#password').val().trim()];
+        
+        let v1 = cek('username', u==="", "Username tidak boleh kosong");
+        let v2 = cek('password', p==="", "Password tidak boleh kosong") && cek('password', p.length<6, "Min 6 karakter") && cek('password', p.length>16, "Max 16 karakter");
+        
+        if (v1 && v2) {
+            $("#hasilForm").html(`<p style='color:#27ae60;font-weight:bold'>Selamat datang kembali, ${u}!</p>`);
+            this.reset();
         }
-    }
-}
+    });
 
-function prosesForm(event, jenisForm) {
-    event.preventDefault(); 
-    
-    if (jenisForm === 'kontak') {
-        let nama = document.getElementById("nama").value;
-        let email = document.getElementById("email").value;
-        alert("Terima kasih, " + nama + "! Pesan Anda telah kami terima dan akan segera dibalas melalui email (" + email + ").");
-        document.querySelector("form").reset(); 
-    } 
-    else if (jenisForm === 'login') {
-        let username = document.getElementById("username").value;
-        alert("Selamat datang kembali, " + username + "!");
-    }
-}
+    $("#btn-muat-paket").click(function() {
+        $.getJSON("paket.json", d => {
+            $("#paketContainer").html(d.map(p => `
+                <article class="paket-card">
+                    <h3 class="judul-paket" style="color:#d4af37;cursor:pointer" data-harga="${p.harga}">${p.nama}</h3>
+                    <div class="price">Rp ${p.harga.toLocaleString('id-ID')} <span>/ ORANG</span></div>
+                    <p>${p.deskripsi}</p><hr>
+                    ${p.fasilitas?.length ? `<h4 style="color:#d4af37;text-align:left;margin-bottom:15px;">Fasilitas Paket:</h4><ul>${p.fasilitas.map(f=>`<li>${f}</li>`).join('')}</ul>` : ""}
+                    ${p.itinerary?.length ? `<h4 style="color:#d4af37;text-align:left;margin-bottom:15px;">Itinerary Singkat:</h4><ol>${p.itinerary.map(i=>`<li>${i}</li>`).join('')}</ol>` : ""}
+                    <button class="btn-pesan" data-nama="${p.nama}" data-harga="${p.harga}">Pesan Sekarang</button>
+                </article>`).join(''));
+            $(this).hide();
+        }).fail(() => alert("Terjadi kesalahan saat memuat data!"));
+    });
+
+    $("#paketContainer")
+        .on("click", ".judul-paket", function() {
+            alert(`Informasi Harga Paket: Rp ${$(this).data("harga").toLocaleString('id-ID')}`);
+        })
+        .on("click", ".btn-pesan", function() {
+            let $t = $(this), n = $t.data("nama"), h = $t.data("harga"), i = prompt(`Berapa orang yang akan ikut dalam ${n}?`, "1");
+            if (i !== null) {
+                let j = Number(i);
+                
+                Number.isInteger(j) && j > 0 
+                    ? alert(`Berhasil! Anda memesan ${n} untuk ${j} orang.\nTotal biaya: Rp ${(j * h).toLocaleString('id-ID')}`) 
+                    : alert("Jumlah tidak valid! Harap hanya masukkan angka bulat (huruf tidak diperbolehkan).");
+            }
+        });
+});

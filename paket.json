@@ -1,0 +1,31 @@
+[
+  {
+    "nama": "Paket Sailing Laut Komodo 3H2M",
+    "harga": 2500000,
+    "deskripsi": "Rasakan sensasi menginap di atas kapal Phinisi sambil mengelilingi pulau-pulau eksotis dan lautan indah di Taman Nasional Komodo.",
+    "fasilitas": [
+      "Menginap di Kapal Phinisi (Cabin AC)",
+      "Makan 3x sehari selama pelayaran",
+      "Alat snorkeling lengkap",
+      "Tiket masuk Taman Nasional Komodo"
+    ],
+    "itinerary": [
+      "Hari 1: Penjemputan & Check-in Phinisi",
+      "Hari 2: Trekking & Snorkeling Pantai Pink",
+      "Hari 3: Eksplorasi & Kembali ke Pelabuhan"
+    ]
+  },
+  {
+    "nama": "Paket Jungle Trekking Bukit Lawang 2H1M",
+    "harga": 850000,
+    "deskripsi": "Jelajahi rimbunnya hutan tropis Taman Nasional Gunung Leuser dan saksikan langsung keseharian Orangutan Sumatera di habitat aslinya.",
+    "fasilitas": [
+      "Transportasi penjemputan dari Kota Medan (PP)",
+      "Penginapan 1 malam di Eco-lodge pinggir sungai",
+      "Pemandu Jungle Trekking lokal bersertifikat",
+      "Sesi River Tubing (Arung Jeram Ban) di Sungai Bahorok",
+      "Makan siang ala piknik di dalam hutan"
+    ],
+    "itinerary": []
+  }
+]

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paket Travel - Jelajah Dunia</title>
     <link rel="stylesheet" href="CSS/style.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
 <body class="page-paket">
 
@@ -21,48 +22,15 @@
         </nav>
     </header>
 
-    <main>
-        <h2>Daftar Paket Wisata Pilihan</h2>
-        
-        <div class="grid-container">
-            <article class="paket-card">
-                <h3>Paket Sailing Laut Komodo 3H2M</h3>
-                <div class="price">Rp 2.500.000 <span>/ ORANG</span></div>
-                <p>Rasakan sensasi menginap di atas kapal Phinisi sambil mengelilingi pulau-pulau eksotis dan lautan indah di Taman Nasional Komodo.</p>
-                <hr>
-                <h4 style="color: #d4af37; text-align: left; margin-bottom: 15px;">Fasilitas Paket:</h4>
-                <ul>
-                    <li>Menginap di Kapal Phinisi (Cabin AC)</li>
-                    <li>Makan 3x sehari selama pelayaran</li>
-                    <li>Alat snorkeling lengkap</li>
-                    <li>Tiket masuk Taman Nasional Komodo</li>
-                </ul>
-                <h4 style="color: #d4af37; text-align: left; margin-bottom: 15px;">Itinerary Singkat:</h4>
-                <ol>
-                    <li>Hari 1: Penjemputan & Check-in Phinisi</li>
-                    <li>Hari 2: Trekking & Snorkeling Pantai Pink</li>
-                    <li>Hari 3: Eksplorasi & Kembali ke Pelabuhan</li>
-                </ol>
-                <button onclick="pesanPaket('Paket Sailing Laut Komodo 3H2M', 2500000)">Pesan Sekarang</button>
-            </article>
-
-            <article class="paket-card">
-                <h3>Paket Jungle Trekking Bukit Lawang 2H1M</h3>
-                <div class="price">Rp 850.000 <span>/ ORANG</span></div>
-                <p>Jelajahi rimbunnya hutan tropis Taman Nasional Gunung Leuser dan saksikan langsung keseharian Orangutan Sumatera di habitat aslinya.</p>
-                <hr>
-                <h4 style="color: #d4af37; text-align: left; margin-bottom: 15px;">Fasilitas Paket:</h4>
-                <ul>
-                    <li>Transportasi penjemputan dari Kota Medan (PP)</li>
-                    <li>Penginapan 1 malam di Eco-lodge pinggir sungai</li>
-                    <li>Pemandu Jungle Trekking lokal bersertifikat</li>
-                    <li>Sesi River Tubing (Arung Jeram Ban) di Sungai Bahorok</li>
-                    <li>Makan siang ala piknik di dalam hutan</li>
-                </ul>
-                <button onclick="pesanPaket('Paket Jungle Trekking Bukit Lawang 2H1M', 850000)">Pesan Sekarang</button>
-            </article>
-        </div>
-    </main>
+<main>
+    <h2>Daftar Paket Wisata Pilihan</h2>
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <button id="btn-muat-paket" style="width: auto;">Tampilkan Data Paket Wisata</button>
+    </div>
+    
+    <div id="paketContainer" class="grid-container"></div>
+</main>
 
     <footer>
         <p>&copy; 2026 Jelajah Dunia Bersama Jeffri Andrean. All rights reserved.</p>

@@ -345,3 +345,23 @@ footer a {
     color: #4a4a4a;
     font-size: 0.95em;
 }
+
+.error-message {
+    color: #e74c3c;
+    font-size: 0.85em;
+    margin-top: 6px;       
+    margin-bottom: 0;     
+    display: block;        
+    font-weight: bold;
+    text-align: left;
+}
+
+input.error, textarea.error {
+    border-color: #e74c3c !important;
+    background-color: #fceceb !important;
+}
+
+#hasilForm {
+    text-align: center;
+    margin-top: 20px;
+}
